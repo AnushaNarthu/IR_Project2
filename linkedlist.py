@@ -15,6 +15,7 @@ class Node:
             Hint: You may want to define skip pointers & appropriate score calculation here"""
         self.value = value
         self.next = next
+        self.skipper = skipper
 
 
 class LinkedList:
@@ -62,7 +63,7 @@ class LinkedList:
         finished_skips = 0
         while first is not None and finished_skips <= self.n_skips:
                 if index!=0 and index%self.skip_length==0:
-                    tmp.next_skip = first
+                    tmp.skipper = first
                     tmp = first
                     finished_skips+=1
                 index+=1    
@@ -71,7 +72,6 @@ class LinkedList:
             This function does not return anything.
             To be implemented."""
         return
-
     def insert_at_end(self, value):
         """ Write logic to add new elements to the linked list.
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
