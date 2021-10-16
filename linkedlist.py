@@ -59,7 +59,7 @@ class LinkedList:
 
         node = self.start_node
         index = 0
-        tmp = 0
+        tmp = node
         finished_skips = 0
         while node is not None and finished_skips <= self.n_skips:
                 if index!=0 and index%self.skip_length==0:
