@@ -47,7 +47,7 @@ class LinkedList:
             return
         else:
             node2 = self.start_node
-            traversal.append(n.value)
+            traversal.append(node2.value)
             
             while node2.skipper is not None:
                 node2 = node2.skipper
