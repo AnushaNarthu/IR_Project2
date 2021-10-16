@@ -46,10 +46,17 @@ class LinkedList:
         if self.start_node is None:
             return
         else:
+            node2 = self.start_node
+            traversal.append(n.value)
+            
+            while node2.skipper is not None:
+                node2 = node2.skipper
+                traversal.append(node2.value)
+            
+            return traversal
             """ Write logic to traverse the linked list using skip pointers.
                 To be implemented."""
-            raise NotImplementedError
-            return traversal
+            
 
     def add_skip_connections(self):
         n_skips = math.floor(math.sqrt(self.length))
