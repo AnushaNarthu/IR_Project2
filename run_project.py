@@ -105,7 +105,7 @@ class ProjectRunner:
             input_term_arr = self.preprocessor.tokenizer(query)  # Tokenized query. To be implemented.
 
             for term in input_term_arr:
-                postings, skip_postings = self.indexer.inverted_index[term].traverse_list(), None
+                postings, skip_postings = self.indexer.inverted_index[term].traverse_list(), self.indexer.inverted_index[term].traverse_skips()
 
                 """ Implement logic to populate initialize the above variables.
                     The below code formats your result to the required format.
