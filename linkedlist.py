@@ -56,7 +56,7 @@ class LinkedList:
             n_skips = n_skips - 1
         self.skip_length = round(n_skips, 0)
 
-        first = value.start_node
+        first = self.value.start_node
         index = 0
         tmp = 0
         finished_skips = 0
