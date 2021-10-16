@@ -26,8 +26,10 @@ class Indexer:
     def add_to_index(self, term_, doc_id_):
         if term_ in self.inverted_index.keys():
             posting_list = self.inverted_index[term_]
-            posting_list.insert_at_end(doc_id_)
-            self.inverted_index[term_] = posting_list
+            list1 = posting_list.traverse_list()
+            if doc_id_ not in list1:
+                posting_list.insert_at_end(doc_id_)
+                self.inverted_index[term_] = posting_list
         else:
             posting_list = LinkedList()
             posting_list.insert_at_end(doc_id_)
