@@ -91,7 +91,7 @@ class ProjectRunner:
                        'daatAndSkip': {},
                        'daatAndTfIdf': {},
                        'daatAndSkipTfIdf': {}
-                       #'sanity': self.sanity_checker(random_command)
+                       'sanity': self.sanity_checker(random_command)
                        }
 
         for query in tqdm(query_list):
