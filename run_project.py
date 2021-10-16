@@ -90,7 +90,7 @@ class ProjectRunner:
                        'daatAnd': {},
                        'daatAndSkip': {},
                        'daatAndTfIdf': {},
-                       'daatAndSkipTfIdf': {}
+                       'daatAndSkipTfIdf': {},
                        'sanity': self.sanity_checker(random_command)
                        }
 
