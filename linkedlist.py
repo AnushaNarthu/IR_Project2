@@ -60,8 +60,8 @@ class LinkedList:
         index = 0
         tmp = 0
         finished_skips = 0
-        while first is not None and finished_skips <= value.n_skips:
-                if index!=0 and index%value.skip_length==0:
+        while first is not None and finished_skips <= self.n_skips:
+                if index!=0 and index%self.skip_length==0:
                     tmp.next_skip = first
                     tmp = first
                     finished_skips+=1
