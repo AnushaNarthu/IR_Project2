@@ -32,27 +32,27 @@ class ProjectRunner:
             Use appropriate parameters & return types.
             While merging 2 postings list, preserve the maximum tf-idf value of a document.
             To be implemented."""
-        m = list1.start_node
-        n = list2.start_node
-        comparisons = 0
-        result = LinkedList()
-        while m is not None and n is not None:
-            if m.value == n.value:
-                if m.tfidf > n.tfidf:
-                    result.insert_node_at_end(m)
+            m = list1.start_node
+            n = list2.start_node
+            comparisons = 0
+            result = LinkedList()
+            while m is not None and n is not None:
+                if m.value == n.value:
+                    if m.tfidf > n.tfidf:
+                            result.insert_node_at_end(m)
+                        else:
+                            result.insert_node_at_end(n)
+                        m = m.next
+                        n = n.next
+                elif m.value < n.value:
+                    m = m.next
                 else:
-                    result.insert_node_at_end(n)
-                m = m.next
-                n = n.next
-            elif m.value < n.value:
-                m = m.next
-            else:
-                n = n.next
-            comparisons+=1
+                    n = n.next
+                comparisons+=1
 
-        if skip:
-            result.add_skip_connections()
-        return result,comparisons
+            if skip:
+                result.add_skip_connections()
+            return result,comparisons
 
     def _merge_skip(self, list1, list2,skip = False):
         """ Implement the merge algorithm to merge 2 postings list at a time.
@@ -216,7 +216,7 @@ class ProjectRunner:
 
             and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr)
             and_op_skip = and_op_skip_ll.traverse_list()
-            
+
             and_op_no_score_no_skip, and_results_cnt_no_skip = self._output_formatter(and_op_no_skip)
             and_op_no_score_skip, and_results_cnt_skip = self._output_formatter(and_op_skip)
             and_op_no_score_no_skip_sorted, and_results_cnt_no_skip_sorted = self._output_formatter(and_op_no_skip_sorted)
