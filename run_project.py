@@ -229,7 +229,7 @@ class ProjectRunner:
             and_op_skip = and_op_skip_ll.traverse_list()
             
             and_op_no_skip_sorted_tuple = and_op_no_skip_ll.traverse_list_withidf()
-            #print(sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True))
+            print(sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True))
             and_op_no_skip_sorted = []
             for x in sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1],-x[0]), reverse= True):
                 if x is not None:
