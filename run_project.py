@@ -38,6 +38,9 @@ class ProjectRunner:
         output = LinkedList()
         while node1 is not None and node2 is not None:
             if node1.value == node2.value:
+                if node1.value == 148369:
+                    print(node1.tf_idf,end=' ')
+                    print(node2.tf_idf,end=' ')
                 if node1.tf_idf > node2.tf_idf:
                     output.insert_node_at_end(node1)
                 else:
