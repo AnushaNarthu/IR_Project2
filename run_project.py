@@ -111,7 +111,7 @@ class ProjectRunner:
         old_list = new_array[0][1]
         
         for i in range(1, len(input_term_arr)):
-            old_list,comparisions = self._merge(old_list, arr[i][1])
+            old_list,comparisions = self._merge(old_list, new_array[i][1])
             final_cmprsns+=comparisions
 
         return old_list, final_cmprsns
