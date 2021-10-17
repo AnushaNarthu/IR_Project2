@@ -70,18 +70,18 @@ class ProjectRunner:
                 n = n.next
                 comparisons+=1
             elif m.value < n.value:
-                if m.next_skip is not None and m.next_skip.value <= n.value:
-                    while m.next_skip is not None and m.next_skip.value <= n.value:
+                if m.skipper is not None and m.skipper.value <= n.value:
+                    while m.skipper is not None and m.skipper.value <= n.value:
                         comparisons+=1
-                        m = m.next_skip
+                        m = m.skipper
                 else:
                     comparisons+=1
                     m = m.next
             else:
-                if n.next_skip is not None and n.next_skip.value <= m.value:
-                    while n.next_skip is not None and n.next_skip.value <= m.value:
+                if n.skipper is not None and n.skipper.value <= m.value:
+                    while n.skipper is not None and n.skipper.value <= m.value:
                         comparisons+=1
-                        n = n.next_skip
+                        n = n.skipper
                 else:
                     comparisons+=1
                     n = n.next
