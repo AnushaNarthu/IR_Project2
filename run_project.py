@@ -187,7 +187,7 @@ class ProjectRunner:
             and_op_no_skip_ll , and_comparisons_no_skip = self._daat_and(input_term_arr)
             and_op_no_skip = and_op_no_skip_ll.traverse_list()
 
-            and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr,True)
+            and_op_skip_ll, and_comparisons_skip  =self._daat_and(input_term_arr,True)
             and_op_skip = and_op_skip_ll.traverse_list()
             
             and_op_no_skip_sorted_tuple = and_op_no_skip_ll.traverse_list_withidf()
