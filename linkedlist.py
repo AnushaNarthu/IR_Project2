@@ -64,7 +64,7 @@ class LinkedList:
         self.n_skips = math.floor(math.sqrt(self.length))
         if self.n_skips * self.n_skips == self.length:
             self.n_skips = self.n_skips - 1
-        self.skip_length = round(self.n_skips, 0)
+        self.skip_length = round(math.sqrt(self.length), 0)
 
         node = self.start_node
         index = 0
