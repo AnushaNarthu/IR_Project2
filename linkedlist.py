@@ -60,9 +60,9 @@ class LinkedList:
 
     def add_skip_connections(self):
         self.n_skips = math.floor(math.sqrt(self.length))
-        if n_skips * n_skips == self.length:
-            self.n_skips = n_skips - 1
-        self.skip_length = round(n_skips, 0)
+        if self.n_skips * self.n_skips == self.length:
+            self.n_skips = self.n_skips - 1
+        self.skip_length = round(self.n_skips, 0)
 
         node = self.start_node
         index = 0
