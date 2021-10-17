@@ -36,65 +36,49 @@ class ProjectRunner:
         node2 = comp2.start_node
         total_comparisons = 0
         output = LinkedList()
-        while node1 is not None and node2 is not None:
-            if node1.value == node2.value:
-                if node1.value == 148369:
-                    print(node1.tf_idf,end=' ')
-                    print(node2.tf_idf,end=' ')
-                if node1.tf_idf > node2.tf_idf:
-                    output.insert_node_at_end(node1)
-                else:
-                    output.insert_node_at_end(node2)
-                node1 = node1.next
-                node2 = node2.next
-            elif node1.value < node2.value:
-                node1 = node1.next
-            else:
-                node2 = node2.next
-            total_comparisons+=1
-        
         if skip:
-            output.add_skip_connections()
-        return output,total_comparisons
-    def _merge_skip(self, comp1, comp2,skip = False):
-        """ Implement the merge algorithm to merge 2 postings list at a time.
-            Use appropriate parameters & return types.
-            While merging 2 postings list, preserve the maximum tf-idf value of a document.
-            To be implemented."""
-        node1 = comp1.start_node
-        node2 = comp2.start_node
-        total_comparisons = 0
-        output = LinkedList()
-        while node1 is not None and node2 is not None:
-            if node1.value == node2.value:
-                if node1.tf_idf > node2.tf_idf:
-                    output.insert_node_at_end(node1)
-                else:
-                    output.insert_node_at_end(node2)
-                node1 = node1.next
-                node2 = node2.next
-                total_comparisons+=1
-            elif node1.value < node2.value:
-                if node1.skipper is not None and node1.skipper.value <= node2.value:
-                    while node1.skipper is not None and node1.skipper.value <= node2.value:
-                        total_comparisons+=1
-                        node1 = node1.skipper
-                else:
-                    total_comparisons+=1
+            while node1 is not None and node2 is not None:
+                if node1.value == node2.value:
+                    if node1.tf_idf > node2.tf_idf:
+                        output.insert_node_at_end(node1)
+                    else:
+                        output.insert_node_at_end(node2)
                     node1 = node1.next
-            else:
-                if node2.skipper is not None and node2.skipper.value <= node1.value:
-                    while node2.skipper is not None and node2.skipper.value <= node1.value:
-                        total_comparisons+=1
-                        node2 = node2.skipper
-                else:
-                    total_comparisons+=1
                     node2 = node2.next
-                
-            #comparisons+=1
-        
-        if skip:
+                    total_comparisons+=1
+                elif node1.value < node2.value:
+                    if node1.skipper is not None and node1.skipper.value <= node2.value:
+                        while node1.skipper is not None and node1.skipper.value <= node2.value:
+                            total_comparisons+=1
+                            node1 = node1.skipper
+                    else:
+                        total_comparisons+=1
+                        node1 = node1.next
+                else:
+                    if node2.skipper is not None and node2.skipper.value <= node1.value:
+                        while node2.skipper is not None and node2.skipper.value <= node1.value:
+                            total_comparisons+=1
+                            node2 = node2.skipper
+                    else:
+                        total_comparisons+=1
+                        node2 = node2.next  
             output.add_skip_connections()
+        else:
+            while node1 is not None and node2 is not None:
+                if node1.value == node2.value:
+                    if node1.tf_idf > node2.tf_idf:
+                        output.insert_node_at_end(node1)
+                        node1 = node1.next
+                        node2 = node2.next
+                    else:
+                        output.insert_node_at_end(node2)
+                        node1 = node1.next
+                        node2 = node2.next
+                elif node1.value < node2.value:
+                    node1 = node1.next
+                else:
+                    node2 = node2.next
+                total_comparisons+=1
         return output,total_comparisons
 
     def _daat_and(self,input_term_arr):
@@ -136,7 +120,7 @@ class ProjectRunner:
         old_list = new_array[0][1]
         
         for i in range(1, len(input_term_arr)):
-            old_list,comparisions = self._merge_skip(old_list, new_array[i][1],True)
+            old_list,comparisions = self._merge(old_list, new_array[i][1],True)
             final_cmprsns+=comparisions
 
         return old_list, final_cmprsns
