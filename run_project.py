@@ -27,29 +27,29 @@ class ProjectRunner:
         self.preprocessor = Preprocessor()
         self.indexer = Indexer()
 
-        def _merge(self, list1, list2,skip = False):
+     def _merge(self, list1, list2,skip = False):
         
-            m = list1.start_node
-            n = list2.start_node
-            comparisons = 0
-            result = LinkedList()
-            while m is not None and n is not None:
-                if m.value == n.value:
-                    if m.tfidf > n.tfidf:
-                            result.insert_node_at_end(m)
-                    else:
-                        result.insert_node_at_end(n)
-                    m = m.next
-                    n = n.next
-                elif m.value < n.value:
-                    m = m.next
+        m = list1.start_node
+        n = list2.start_node
+        comparisons = 0
+        result = LinkedList()
+        while m is not None and n is not None:
+            if m.value == n.value:
+                if m.tfidf > n.tfidf:
+                        result.insert_node_at_end(m)
                 else:
-                    n = n.next
-                comparisons+=1
+                    result.insert_node_at_end(n)
+                m = m.next
+                n = n.next
+            elif m.value < n.value:
+                m = m.next
+            else:
+                n = n.next
+            comparisons+=1
 
-            if skip:
-                result.add_skip_connections()
-            return result,comparisons
+        if skip:
+            result.add_skip_connections()
+        return result,comparisons
 
     def _merge_skip(self, list1, list2,skip = False):
         """ Implement the merge algorithm to merge 2 postings list at a time.
