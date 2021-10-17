@@ -227,6 +227,21 @@ class ProjectRunner:
 
             and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr)
             and_op_skip = and_op_skip_ll.traverse_list()
+            
+            and_op_no_skip_sorted_tuple = and_op_no_skip_ll.traverse_list_withidf()
+            #print(sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True))
+            and_op_no_skip_sorted = []
+            for x in sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1],-x[0]), reverse= True):
+                if x is not None:
+                    and_op_no_skip_sorted.append(x[0])
+            and_comparisons_no_skip_sorted = and_comparisons_no_skip
+
+            and_op_skip_sorted_tuple = and_op_skip_ll.traverse_list_withidf()
+            and_op_skip_sorted= []
+            for x in sorted(and_op_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True):
+                if x is not None:
+                    and_op_skip_sorted.append(x[0])
+            and_comparisons_skip_sorted = and_comparisons_skip
 
             and_op_no_score_no_skip, and_results_cnt_no_skip = self._output_formatter(and_op_no_skip)
             and_op_no_score_skip, and_results_cnt_skip = self._output_formatter(and_op_skip)
