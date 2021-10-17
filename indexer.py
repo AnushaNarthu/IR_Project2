@@ -67,12 +67,13 @@ class Indexer:
             
         return
 
-    def calculate_tf_idf(self,docs_count,count_term):
+    def calculate_tf_idf(self,docs_count,docs):
         for value in self.inverted_index.values():
             m = value.start_node
             while m is not None:
+                count_term = len(docs[m.value])
                 doc_freq = value.length
-                term_freq = m.count_terms/count_term[m.value]
+                term_freq = m.count_terms/count_term
                 docs_count = docs_count
                 idf = docs_count/doc_freq
                 m.tf_idf = term_freq*idf
@@ -84,4 +85,3 @@ class Indexer:
         
         
     
-      
