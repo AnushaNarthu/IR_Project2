@@ -119,13 +119,13 @@ class ProjectRunner:
         """ This function reads & indexes the corpus. After creating the inverted index,
             it sorts the index by the terms, add skip pointers, and calculates the tf-idf scores.
             Already implemented, but you can modify the orchestration, as you seem fit."""
-        count_term = {}
         docs_count = 0
+        docs = {}
         with open(corpus, 'r',encoding = 'utf-8') as fp:
             for line in tqdm(fp.readlines()):
                 doc_id, document = self.preprocessor.get_doc_id(line)
                 tokenized_document = self.preprocessor.tokenizer(document)
-                count_term[doc_id] = len(tokenized_document)
+                docs[doc_id] = tokenized_document
                 self.indexer.generate_inverted_index(doc_id, tokenized_document)
                 docs_count+=1
         self.indexer.sort_terms()
