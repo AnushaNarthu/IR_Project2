@@ -53,6 +53,46 @@ class ProjectRunner:
         if skip:
             result.add_skip_connections()
         return result,comparisons
+    def _merge_skip(self, list1, list2,skip = False):
+        """ Implement the merge algorithm to merge 2 postings list at a time.
+            Use appropriate parameters & return types.
+            While merging 2 postings list, preserve the maximum tf-idf value of a document.
+            To be implemented."""
+        m = list1.start_node
+        n = list2.start_node
+        comparisons = 0
+        result = LinkedList()
+        while m is not None and n is not None:
+            if m.value == n.value:
+                if m.tf_idf > n.tf_idf:
+                    result.insert_node_at_end(m)
+                else:
+                    result.insert_node_at_end(n)
+                m = m.next
+                n = n.next
+                comparisons+=1
+            elif m.value < n.value:
+                if m.skipper is not None and m.skipper.value <= n.value:
+                    while m.skipper is not None and m.skipper.value <= n.value:
+                        comparisons+=1
+                        m = m.skipper
+                else:
+                    comparisons+=1
+                    m = m.next
+            else:
+                if n.skipper is not None and n.skipper.value <= m.value:
+                    while n.skipper is not None and n.skipper.value <= m.value:
+                        comparisons+=1
+                        n = n.skipper
+                else:
+                    comparisons+=1
+                    n = n.next
+                
+            #comparisons+=1
+        
+        if skip:
+            result.add_skip_connections()
+        return result,comparisons
 
     def _daat_and(self,input_term_arr):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
@@ -72,6 +112,28 @@ class ProjectRunner:
         
         for i in range(1, len(input_term_arr)):
             prev,comps = self._merge(prev, arr[i][1])
+            total_comps+=comps
+
+        return prev, total_comps
+    def _daat_and_skip(self,input_term_arr):
+        """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
+            Use appropriate parameters & return types.
+            To be implemented."""
+        arr =[]
+        for i in range(len(input_term_arr)):
+            posting_list = self.indexer.inverted_index[input_term_arr[i]]
+            arr.append((posting_list.length,posting_list))
+
+        arr = sorted(arr, key=lambda x: (x[0]))
+
+        total_comps = 0
+        if len(input_term_arr) < 2:
+            return self.indexer.inverted_index[input_term_arr[0]],total_comps
+        
+        prev = arr[0][1]#self.indexer.inverted_index[input_term_arr[0]]
+        
+        for i in range(1, len(input_term_arr)):
+            prev,comps = self._merge_skip(prev, arr[i][1],True)
             total_comps+=comps
 
         return prev, total_comps
