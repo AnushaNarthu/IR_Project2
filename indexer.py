@@ -30,6 +30,13 @@ class Indexer:
             if doc_id_ not in list1:
                 posting_list.insert_at_end(doc_id_)
                 self.inverted_index[term_] = posting_list
+            else:
+                m = posting_list.start_node
+                while m is not None:
+                    if m.value == doc_id_:
+                        m.count_term+=1
+                        break
+                    m = m.next
         else:
             posting_list = LinkedList()
             posting_list.insert_at_end(doc_id_)
