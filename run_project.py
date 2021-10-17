@@ -27,7 +27,7 @@ class ProjectRunner:
         self.preprocessor = Preprocessor()
         self.indexer = Indexer()
 
-     def _merge(self, list1, list2,skip = False):
+    def _merge(self, list1, list2,skip = False):
         
         m = list1.start_node
         n = list2.start_node
