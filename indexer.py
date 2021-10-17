@@ -34,7 +34,7 @@ class Indexer:
                 m = posting_list.start_node
                 while m is not None:
                     if m.value == doc_id_:
-                        m.count_term+=1
+                        m.count_terms+=1
                         break
                     m = m.next
         else:
