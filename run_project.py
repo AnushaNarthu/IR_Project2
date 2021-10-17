@@ -81,28 +81,7 @@ class ProjectRunner:
                 total_comparisons+=1
         return output,total_comparisons
 
-    def _daat_and(self,input_term_arr):
-        """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
-            Use appropriate parameters & return types.
-            To be implemented."""
-        new_array =[]
-        for i in range(len(input_term_arr)):
-            posting_list = self.indexer.inverted_index[input_term_arr[i]]
-            new_array.append((posting_list.length,posting_list))
-        
-        new_array = sorted(new_array, key=lambda x: (x[0]))
-        final_cmprsns = 0
-        if len(input_term_arr) < 2:
-            return self.indexer.inverted_index[input_term_arr[0]],final_cmprsns
-        
-        old_list = new_array[0][1]
-        
-        for i in range(1, len(input_term_arr)):
-            old_list,comparisions = self._merge(old_list, new_array[i][1])
-            final_cmprsns+=comparisions
-
-        return old_list, final_cmprsns
-    def _daat_and_skip(self,input_term_arr):
+    def _daat_and(self,input_term_arr,skip=False):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
@@ -111,16 +90,12 @@ class ProjectRunner:
             posting_list = self.indexer.inverted_index[input_term_arr[i]]
             new_array.append((posting_list.length,posting_list))
 
-        new_array = sorted(new_array, key=lambda x: (x[0]))
-
+        new_array = sorted(new_array, key=lambda x: (x[0]))  
         final_cmprsns = 0
-        if len(input_term_arr) < 2:
-            return self.indexer.inverted_index[input_term_arr[0]],final_cmprsns
-        
-        old_list = new_array[0][1]
-        
+            
+        old_list = new_array[0][1]      
         for i in range(1, len(input_term_arr)):
-            old_list,comparisions = self._merge(old_list, new_array[i][1],True)
+            old_list,comparisions = self._merge(old_list, new_array[i][1],skip)
             final_cmprsns+=comparisions
 
         return old_list, final_cmprsns
@@ -212,7 +187,7 @@ class ProjectRunner:
             and_op_no_skip_ll , and_comparisons_no_skip = self._daat_and(input_term_arr)
             and_op_no_skip = and_op_no_skip_ll.traverse_list()
 
-            and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr)
+            and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr,True)
             and_op_skip = and_op_skip_ll.traverse_list()
             
             and_op_no_skip_sorted_tuple = and_op_no_skip_ll.traverse_list_withidf()
