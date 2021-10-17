@@ -28,10 +28,7 @@ class ProjectRunner:
         self.indexer = Indexer()
 
         def _merge(self, list1, list2,skip = False):
-        """ Implement the merge algorithm to merge 2 postings list at a time.
-            Use appropriate parameters & return types.
-            While merging 2 postings list, preserve the maximum tf-idf value of a document.
-            To be implemented."""
+        
             m = list1.start_node
             n = list2.start_node
             comparisons = 0
