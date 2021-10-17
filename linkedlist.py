@@ -86,6 +86,9 @@ class LinkedList:
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
             element, and elements to the right are greater than the inserted element.
             To be implemented. """
+        if self.start_node is not None:
+            if value in self.traverse_list():
+                return
         new_node = Node(value=value)
         n = self.start_node
 
