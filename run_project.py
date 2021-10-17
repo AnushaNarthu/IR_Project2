@@ -70,6 +70,8 @@ class ProjectRunner:
                 n = n.next
                 comparisons+=1
             elif m.value < n.value:
+                print(m.skipper)
+                print(n)
                 if m.skipper is not None and m.skipper.value <= n.value:
                     while m.skipper is not None and m.skipper.value <= n.value:
                         comparisons+=1
