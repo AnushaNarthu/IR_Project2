@@ -27,116 +27,116 @@ class ProjectRunner:
         self.preprocessor = Preprocessor()
         self.indexer = Indexer()
 
-    def _merge(self, list1, list2,skip = False):
+    def _merge(self, comp1, comp2,skip = False):
         """ Implement the merge algorithm to merge 2 postings list at a time.
             Use appropriate parameters & return types.
             While merging 2 postings list, preserve the maximum tf-idf value of a document.
             To be implemented."""
-        m = list1.start_node
-        n = list2.start_node
-        comparisons = 0
-        result = LinkedList()
-        while m is not None and n is not None:
-            if m.value == n.value:
-                if m.tf_idf > n.tf_idf:
-                    result.insert_node_at_end(m)
+        node1 = comp1.start_node
+        node2 = comp2.start_node
+        total_comparisons = 0
+        output = LinkedList()
+        while node1 is not None and node2 is not None:
+            if node1.value == node2.value:
+                if node1.tf_idf > node2.tf_idf:
+                    output.insert_node_at_end(node1)
                 else:
-                    result.insert_node_at_end(n)
-                m = m.next
-                n = n.next
-            elif m.value < n.value:
-                m = m.next
+                    output.insert_node_at_end(node2)
+                node1 = node1.next
+                node2 = node2.next
+            elif node1.value < node2.value:
+                node1 = node1.next
             else:
-                n = n.next
-            comparisons+=1
+                node2 = node2.next
+            total_comparisons+=1
         
         if skip:
-            result.add_skip_connections()
-        return result,comparisons
-    def _merge_skip(self, list1, list2,skip = False):
+            output.add_skip_connections()
+        return output,total_comparisons
+    def _merge_skip(self, comp1, comp2,skip = False):
         """ Implement the merge algorithm to merge 2 postings list at a time.
             Use appropriate parameters & return types.
             While merging 2 postings list, preserve the maximum tf-idf value of a document.
             To be implemented."""
-        m = list1.start_node
-        n = list2.start_node
-        comparisons = 0
-        result = LinkedList()
-        while m is not None and n is not None:
-            if m.value == n.value:
-                if m.tf_idf > n.tf_idf:
-                    result.insert_node_at_end(m)
+        node1 = comp1.start_node
+        node2 = comp2.start_node
+        total_comparisons = 0
+        output = LinkedList()
+        while node1 is not None and node2 is not None:
+            if node1.value == node2.value:
+                if node1.tf_idf > node2.tf_idf:
+                    output.insert_node_at_end(node1)
                 else:
-                    result.insert_node_at_end(n)
-                m = m.next
-                n = n.next
-                comparisons+=1
-            elif m.value < n.value:
-                if m.skipper is not None and m.skipper.value <= n.value:
-                    while m.skipper is not None and m.skipper.value <= n.value:
-                        comparisons+=1
-                        m = m.skipper
+                    output.insert_node_at_end(node2)
+                node1 = node1.next
+                node2 = node2.next
+                total_comparisons+=1
+            elif node1.value < node2.value:
+                if node1.skipper is not None and node1.skipper.value <= node2.value:
+                    while node1.skipper is not None and node1.skipper.value <= node2.value:
+                        total_comparisons+=1
+                        node1 = node1.skipper
                 else:
-                    comparisons+=1
-                    m = m.next
+                    total_comparisons+=1
+                    node1 = node1.next
             else:
-                if n.skipper is not None and n.skipper.value <= m.value:
-                    while n.skipper is not None and n.skipper.value <= m.value:
-                        comparisons+=1
-                        n = n.skipper
+                if node2.skipper is not None and node2.skipper.value <= node1.value:
+                    while node2.skipper is not None and node2.skipper.value <= node1.value:
+                        total_comparisons+=1
+                        node2 = node2.skipper
                 else:
-                    comparisons+=1
-                    n = n.next
+                    total_comparisons+=1
+                    node2 = node2.next
                 
             #comparisons+=1
         
         if skip:
-            result.add_skip_connections()
-        return result,comparisons
+            output.add_skip_connections()
+        return output,total_comparisons
 
     def _daat_and(self,input_term_arr):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
-        arr =[]
+        new_array =[]
         for i in range(len(input_term_arr)):
             posting_list = self.indexer.inverted_index[input_term_arr[i]]
-            arr.append((posting_list.length,posting_list))
+            new_array.append((posting_list.length,posting_list))
         
-        arr = sorted(arr, key=lambda x: (x[0]))
-        total_comps = 0
+        new_array = sorted(new_array, key=lambda x: (x[0]))
+        final_cmprsns = 0
         if len(input_term_arr) < 2:
-            return self.indexer.inverted_index[input_term_arr[0]],total_comps
+            return self.indexer.inverted_index[input_term_arr[0]],final_cmprsns
         
-        prev = arr[0][1]#self.indexer.inverted_index[input_term_arr[0]]
+        old_list = new_array[0][1]
         
         for i in range(1, len(input_term_arr)):
-            prev,comps = self._merge(prev, arr[i][1])
-            total_comps+=comps
+            old_list,comparisions = self._merge(old_list, arr[i][1])
+            final_cmprsns+=comparisions
 
-        return prev, total_comps
+        return old_list, final_cmprsns
     def _daat_and_skip(self,input_term_arr):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
-        arr =[]
+        new_array =[]
         for i in range(len(input_term_arr)):
             posting_list = self.indexer.inverted_index[input_term_arr[i]]
-            arr.append((posting_list.length,posting_list))
+            new_array.append((posting_list.length,posting_list))
 
-        arr = sorted(arr, key=lambda x: (x[0]))
+        new_array = sorted(new_array, key=lambda x: (x[0]))
 
-        total_comps = 0
+        final_cmprsns = 0
         if len(input_term_arr) < 2:
-            return self.indexer.inverted_index[input_term_arr[0]],total_comps
+            return self.indexer.inverted_index[input_term_arr[0]],final_cmprsns
         
-        prev = arr[0][1]#self.indexer.inverted_index[input_term_arr[0]]
+        old_list = new_array[0][1]
         
         for i in range(1, len(input_term_arr)):
-            prev,comps = self._merge_skip(prev, arr[i][1],True)
-            total_comps+=comps
+            prev,comparisions = self._merge_skip(old_list, new_array[i][1],True)
+            final_cmprsns+=comparisions
 
-        return prev, total_comps
+        return old_list, final_cmprsns
 
     def _get_postings(self):
         """ Function to get the postings list of a term from the index.
