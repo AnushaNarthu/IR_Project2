@@ -59,14 +59,18 @@ class ProjectRunner:
         """ This function reads & indexes the corpus. After creating the inverted index,
             it sorts the index by the terms, add skip pointers, and calculates the tf-idf scores.
             Already implemented, but you can modify the orchestration, as you seem fit."""
+        count_term = {}
+        docs_count = 0
         with open(corpus, 'r',encoding = 'utf-8') as fp:
             for line in tqdm(fp.readlines()):
                 doc_id, document = self.preprocessor.get_doc_id(line)
                 tokenized_document = self.preprocessor.tokenizer(document)
+                count_term[doc_id] = len(tokenized_document)
                 self.indexer.generate_inverted_index(doc_id, tokenized_document)
+                docs_count+=1
         self.indexer.sort_terms()
         self.indexer.add_skip_connections()
-        #self.indexer.calculate_tf_idf()
+        self.indexer.calculate_tf_idf()
 
     def sanity_checker(self, command):
         """ DO NOT MODIFY THIS. THIS IS USED BY THE GRADER. """
@@ -153,7 +157,7 @@ def execute_query():
     """ This function handles the POST request to your endpoint.
         Do NOT change it."""
     start_time = time.time()
-
+    
     queries = request.json["queries"]
     random_command = request.json["random_command"]
 
@@ -196,5 +200,4 @@ if __name__ == "__main__":
     """ Index the documents from beforehand. When the API endpoint is hit, queries are run against 
         this pre-loaded in memory index. """
     runner.run_indexer(corpus)
-
     app.run(host="0.0.0.0", port=9999)
