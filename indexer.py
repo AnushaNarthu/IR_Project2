@@ -51,8 +51,6 @@ class Indexer:
         self.inverted_index = sorted_index
 
     def add_skip_connections(self):
-        """ For each postings list in the index, add skip pointers.
-            To be implemented."""
         for value in self.inverted_index.keys():
             pointer = self.inverted_index[value]
             pointer.add_skip_connections()
@@ -62,7 +60,21 @@ class Indexer:
             
         return
 
-    def calculate_tf_idf(self):
-        """ Calculate tf-idf score for each document in the postings lists of the index.
-            To be implemented."""
-        raise NotImplementedError
+    def calculate_tf_idf(self,docs_count,count_term):
+        for value in self.inverted_index.values():
+            m = value.start_node
+            while m is not None:
+                doc_freq = value.length
+                term_freq = m.count_terms/count_term[m.value]
+                docs_count = docs_count
+                idf = docs_count/doc_freq
+                m.tf_idf = term_freq*idf
+                print(m.tf_idf)
+                m = m.next
+                """ Calculate tf-idf score for each document in the postings lists of the index.
+              To be implemented."""
+        return
+        
+        
+    
+      
