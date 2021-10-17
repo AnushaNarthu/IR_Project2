@@ -98,7 +98,7 @@ class ProjectRunner:
             old_list,comparisions = self._merge(old_list, new_array[i][1],skip)
             final_cmprsns+=comparisions
 
-        return old_list, final_cmprsns
+        return old_list.traverse_list(), final_cmprsns
 
     def _get_postings(self,term):
         """ Function to get the postings list of a term from the index.
@@ -181,14 +181,11 @@ class ProjectRunner:
             and_op_no_skip, and_op_skip, and_op_no_skip_sorted, and_op_skip_sorted = None, None, None, None
             and_comparisons_no_skip, and_comparisons_skip, \
                 and_comparisons_no_skip_sorted, and_comparisons_skip_sorted = None, None, None, None
-            """ Implement logic to populate initialize the above variables.
+            """ Implement logic to populatetraverse_list() initialize the above variables.
                 The below code formats your result to the required format.
                 To be implemented."""
-            and_op_no_skip_ll , and_comparisons_no_skip = self._daat_and(input_term_arr)
-            and_op_no_skip = and_op_no_skip_ll.traverse_list()
-
-            and_op_skip_ll, and_comparisons_skip  =self._daat_and(input_term_arr,True)
-            and_op_skip = and_op_skip_ll.traverse_list()
+            and_op_no_skip , and_comparisons_no_skip = self._daat_and(input_term_arr)
+            and_op_skip, and_comparisons_skip  =self._daat_and(input_term_arr,True)
             
             and_op_no_skip_sorted_tuple = and_op_no_skip_ll.traverse_list_withidf()
             print(sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True))
