@@ -27,18 +27,54 @@ class ProjectRunner:
         self.preprocessor = Preprocessor()
         self.indexer = Indexer()
 
-    def _merge(self):
+    def _merge(self, list1, list2,skip = False):
         """ Implement the merge algorithm to merge 2 postings list at a time.
             Use appropriate parameters & return types.
             While merging 2 postings list, preserve the maximum tf-idf value of a document.
             To be implemented."""
-        raise NotImplementedError
+        m = list1.start_node
+        n = list2.start_node
+        comparisons = 0
+        result = LinkedList()
+        while m is not None and n is not None:
+            if m.value == n.value:
+                if m.tf_idf > n.tf_idf:
+                    result.insert_node_at_end(m)
+                else:
+                    result.insert_node_at_end(n)
+                m = m.next
+                n = n.next
+            elif m.value < n.value:
+                m = m.next
+            else:
+                n = n.next
+            comparisons+=1
+        
+        if skip:
+            result.add_skip_connections()
+        return result,comparisons
 
-    def _daat_and(self):
+    def _daat_and(self,input_term_arr):
         """ Implement the DAAT AND algorithm, which merges the postings list of N query terms.
             Use appropriate parameters & return types.
             To be implemented."""
-        raise NotImplementedError
+        arr =[]
+        for i in range(len(input_term_arr)):
+            posting_list = self.indexer.inverted_index[input_term_arr[i]]
+            arr.append((posting_list.length,posting_list))
+        
+        arr = sorted(arr, key=lambda x: (x[0]))
+        total_comps = 0
+        if len(input_term_arr) < 2:
+            return self.indexer.inverted_index[input_term_arr[0]],total_comps
+        
+        prev = arr[0][1]#self.indexer.inverted_index[input_term_arr[0]]
+        
+        for i in range(1, len(input_term_arr)):
+            prev,comps = self._merge(prev, arr[i][1])
+            total_comps+=comps
+
+        return prev, total_comps
 
     def _get_postings(self):
         """ Function to get the postings list of a term from the index.
@@ -124,8 +160,8 @@ class ProjectRunner:
             """ Implement logic to populate initialize the above variables.
                 The below code formats your result to the required format.
                 To be implemented."""
-            #and_op_no_skip_ll , and_comparisons_no_skip = self._daat_and(input_term_arr)
-            #and_op_no_skip = and_op_no_skip_ll.traverse_list()
+            and_op_no_skip_ll , and_comparisons_no_skip = self._daat_and(input_term_arr)
+            and_op_no_skip = and_op_no_skip_ll.traverse_list()
 
             #and_op_skip_ll, and_comparisons_skip  =self._daat_and_skip(input_term_arr)
             #and_op_skip = and_op_skip_ll.traverse_list()
