@@ -40,9 +40,9 @@ class ProjectRunner:
             while node1 is not None and node2 is not None:
                 if node1.value == node2.value:
                     if node1.tf_idf > node2.tf_idf:
-                        output.insert_node_at_end(node1)
+                        output.insert_node(node1)
                     else:
-                        output.insert_node_at_end(node2)
+                        output.insert_node(node2)
                     node1 = node1.next
                     node2 = node2.next
                     total_comparisons+=1
@@ -67,11 +67,11 @@ class ProjectRunner:
             while node1 is not None and node2 is not None:
                 if node1.value == node2.value:
                     if node1.tf_idf > node2.tf_idf:
-                        output.insert_node_at_end(node1)
+                        output.insert_node(node1)
                         node1 = node1.next
                         node2 = node2.next
                     else:
-                        output.insert_node_at_end(node2)
+                        output.insert_node(node2)
                         node1 = node1.next
                         node2 = node2.next
                 elif node1.value < node2.value:
