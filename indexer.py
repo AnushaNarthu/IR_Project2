@@ -53,8 +53,9 @@ class Indexer:
     def add_skip_connections(self):
         """ For each postings list in the index, add skip pointers.
             To be implemented."""
-        for value in self.inverted_index.values():
-            value.add_skip_connections()
+        for value in self.inverted_index.keys():
+            pointer = self.inverted_index[value]
+            pointer.add_skip_connections()
 
         """ For each postings list in the index, add skip pointers.
             To be implemented."""
