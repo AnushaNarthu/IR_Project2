@@ -42,18 +42,6 @@ class LinkedList:
                 traversal.append(n.value)
                 n = n.next
             return traversal
-    def traverse_list_withidf(self):
-        traversal = []
-        if self.start_node is None:
-            print("List has no element")
-            return []
-        else:
-            n = self.start_node
-            # Start traversal from head, and go on till you reach None
-            while n is not None:
-                traversal.append((n.value,n.tf_idf))
-                n = n.next
-            return traversal
 
     def traverse_skips(self):
         traversal = []
@@ -145,7 +133,7 @@ class LinkedList:
             new_node.next = n
             self.length+=1
             return
-    def insert_node_at_end(self, node):
+    def insert_node(self, node):
         """ Write logic to add new elements to the linked list.
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
             element, and elements to the right are greater than the inserted element.
@@ -163,5 +151,15 @@ class LinkedList:
             self.length+=1
             return
     
-      
-
+    def get_tfidf(self):
+        traversal = []
+        if self.start_node is None:
+            print("List has no element")
+            return []
+        else:
+            n = self.start_node
+            # Start traversal from head, and go on till you reach None
+            while n is not None:
+                traversal.append((n.value,n.tf_idf))
+                n = n.next
+            return traversal
