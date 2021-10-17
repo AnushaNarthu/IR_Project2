@@ -181,7 +181,7 @@ class ProjectRunner:
             and_op_no_skip = and_op_no_skip_postings.traverse_list()
 
             
-            and_op_no_skip_sorted_tuple = and_op_no_skip_postings.traverse_list_withidf()
+            and_op_no_skip_sorted_tuple = and_op_no_skip_postings.get_tfidf()
             and_op_no_skip_sorted = []
 
             for x in sorted(and_op_no_skip_sorted_tuple, key=lambda x: (x[1],-x[0]), reverse= True):
@@ -193,7 +193,7 @@ class ProjectRunner:
             and_op_skip_posting, and_comparisons_skip  =self._daat_and(input_term_arr,True)
             and_op_skip = and_op_skip_posting.traverse_list()
 
-            and_op_skip_sorted_tuple = and_op_skip_posting.traverse_list_withidf()
+            and_op_skip_sorted_tuple = and_op_skip_posting.get_tfidf()
             and_op_skip_sorted= []
             for x in sorted(and_op_skip_sorted_tuple, key=lambda x: (x[1], -x[0]),reverse = True):
                 if x is not None:
