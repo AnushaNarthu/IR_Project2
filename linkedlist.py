@@ -8,7 +8,7 @@ import math
 
 class Node:
 
-    def __init__(self, value=None, next=None, skipper = None):
+    def __init__(self, value=None, next=None, skipper=None, count_terms = 1, tf_idf=0):
         """ Class to define the structure of each node in a linked list (postings list).
             Value: document id, Next: Pointer to the next node
             Add more parameters if needed.
@@ -16,6 +16,8 @@ class Node:
         self.value = value
         self.next = next
         self.skipper = skipper
+        self.count_terms = count_terms
+        self.tf_idf = tf_idf
 
 
 class LinkedList:
@@ -32,7 +34,7 @@ class LinkedList:
         traversal = []
         if self.start_node is None:
             print("List has no element")
-            return
+            return []
         else:
             n = self.start_node
             # Start traversal from head, and go on till you reach None
@@ -47,7 +49,7 @@ class LinkedList:
             return
         else:
             node2 = self.start_node
-            traversal.append(node2.value)
+            traversal.append(n.value)
             
             while node2.skipper is not None:
                 node2 = node2.skipper
@@ -81,6 +83,7 @@ class LinkedList:
             This function does not return anything.
             To be implemented."""
         return
+
     def insert_at_end(self, value):
         """ Write logic to add new elements to the linked list.
             Insert the element at an appropriate position, such that elements to the left are lower than the inserted
@@ -88,33 +91,46 @@ class LinkedList:
             To be implemented. """
         if self.start_node is not None:
             if value in self.traverse_list():
-                return
+                return    
         new_node = Node(value=value)
         n = self.start_node
 
         if self.start_node is None:
             self.start_node = new_node
             self.end_node = new_node
+            self.length+=1
             return
 
         elif self.start_node.value >= value:
-            self.start_node = new_node
-            self.start_node.next = n
+            if self.start_node.value > value:
+                self.start_node = new_node
+                self.start_node.next = n
+                self.length+=1
+            else:
+                self.start_node.count_terms +=1
             return
 
         elif self.end_node.value <= value:
-            self.end_node.next = new_node
-            self.end_node = new_node
+            if self.end_node.value < value:
+                self.end_node.next = new_node
+                self.end_node = new_node
+                self.length+=1
+            else: 
+                self.end_node.count_terms +=1
             return
 
         else:
             while n.value < value < self.end_node.value and n.next is not None:
                 n = n.next
+                if n.value==value:
+                    n.count_terms+=1
+                    return
 
             m = self.start_node
             while m.next != n and m.next is not None:
                 m = m.next
             m.next = new_node
             new_node.next = n
+            self.length+=1
             return
 
