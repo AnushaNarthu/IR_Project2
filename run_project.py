@@ -37,10 +37,10 @@ class ProjectRunner:
                 if m.value == n.value:
                     if m.tfidf > n.tfidf:
                             result.insert_node_at_end(m)
-                        else:
-                            result.insert_node_at_end(n)
-                        m = m.next
-                        n = n.next
+                    else:
+                        result.insert_node_at_end(n)
+                    m = m.next
+                    n = n.next
                 elif m.value < n.value:
                     m = m.next
                 else:
