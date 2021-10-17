@@ -35,7 +35,7 @@ class ProjectRunner:
         result = LinkedList()
         while m is not None and n is not None:
             if m.value == n.value:
-                if m.tfidf > n.tfidf:
+                if m.tf_idf > n.tf_idf:
                         result.insert_node_at_end(m)
                 else:
                     result.insert_node_at_end(n)
@@ -62,7 +62,7 @@ class ProjectRunner:
         result = LinkedList()
         while m is not None and n is not None:
             if m.value == n.value:
-                if m.tfidf > n.tfidf:
+                if m.tf_idf > n.tf_idf:
                     result.insert_node_at_end(m)
                 else:
                     result.insert_node_at_end(n)
