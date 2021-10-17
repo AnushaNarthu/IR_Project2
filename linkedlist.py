@@ -59,6 +59,8 @@ class LinkedList:
             
 
     def add_skip_connections(self):
+        traverse = self.traverse_list()
+        self.length = len(traverse)
         self.n_skips = math.floor(math.sqrt(self.length))
         if self.n_skips * self.n_skips == self.length:
             self.n_skips = self.n_skips - 1
