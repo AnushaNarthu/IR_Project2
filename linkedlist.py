@@ -42,6 +42,18 @@ class LinkedList:
                 traversal.append(n.value)
                 n = n.next
             return traversal
+    def traverse_list_withidf(self):
+        traversal = []
+        if self.start_node is None:
+            print("List has no element")
+            return []
+        else:
+            n = self.start_node
+            # Start traversal from head, and go on till you reach None
+            while n is not None:
+                traversal.append((n.value,n.tf_idf))
+                n = n.next
+            return traversal
 
     def traverse_skips(self):
         traversal = []
