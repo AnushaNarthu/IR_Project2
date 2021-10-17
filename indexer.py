@@ -69,7 +69,7 @@ class Indexer:
                 docs_count = docs_count
                 idf = docs_count/doc_freq
                 m.tf_idf = term_freq*idf
-                print(m.tf_idf)
+                #print(m.tf_idf)
                 m = m.next
                 """ Calculate tf-idf score for each document in the postings lists of the index.
               To be implemented."""
