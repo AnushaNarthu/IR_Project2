@@ -100,11 +100,11 @@ class ProjectRunner:
 
         return old_list, final_cmprsns
 
-    def _get_postings(self):
+    def _get_postings(self,term):
         """ Function to get the postings list of a term from the index.
             Use appropriate parameters & return types.
             To be implemented."""
-        raise NotImplementedError
+        return self.indexer.inverted_index[term] 
 
     def _output_formatter(self, op):
         """ This formats the result in the required format.
@@ -169,7 +169,7 @@ class ProjectRunner:
             input_term_arr = self.preprocessor.tokenizer(query)  # Tokenized query. To be implemented.
 
             for term in input_term_arr:
-                postings, skip_postings = self.indexer.inverted_index[term].traverse_list(), self.indexer.inverted_index[term].traverse_skips()
+                postings, skip_postings = self._get_postings(term).traverse_list(),self._get_postings(term).traverse_skips()
 
                 """ Implement logic to populate initialize the above variables.
                     The below code formats your result to the required format.
