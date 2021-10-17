@@ -133,7 +133,7 @@ class ProjectRunner:
         old_list = new_array[0][1]
         
         for i in range(1, len(input_term_arr)):
-            prev,comparisions = self._merge_skip(old_list, new_array[i][1],True)
+            old_list,comparisions = self._merge_skip(old_list, new_array[i][1],True)
             final_cmprsns+=comparisions
 
         return old_list, final_cmprsns
